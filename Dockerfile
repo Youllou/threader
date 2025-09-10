@@ -24,4 +24,4 @@ ENV PYTHONUNBUFFERED=1 \
     DATABASE_URL=sqlite:///shame.db
 
 # Run the bot
-CMD ["python", "bot.py"]
+CMD ["python", "threader.py"]
