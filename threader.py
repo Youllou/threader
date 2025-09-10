@@ -6,8 +6,8 @@ import os
 load_dotenv()
 # Initialize app with bot token and signing secret
 app = App(
-    token=os.TOKEN,
-    signing_secret=os.SIGNING_SECRET
+    token=os.getenv("TOKEN"),
+    signing_secret=os.getenv("SIGNING_SECRET")
 )
 
 TRIGGER_EMOJI = "thread"  # name of the emoji without colons
