@@ -61,5 +61,5 @@ def handle_reaction_added(event, client):
 
 if __name__ == "__main__":
     auto_join_public_channels(app.client)
-    app.start(port=3000)
+    app.start(port=3001)
     
