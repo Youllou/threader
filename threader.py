@@ -39,22 +39,19 @@ def handle_reaction_added(event, client):
         channel = event["item"]["channel"]
         ts = event["item"]["ts"]
 
-        # 1. Fetch the original message
-        history = client.conversations_history(channel=channel, latest=ts, inclusive=True, limit=1)
-        if not history["messages"]:
-            return
+        user = original_message.get("user")
+        channel_info = client.conversations_info(channel=channel)
+        channel_name = channel_info["channel"]["name"]
 
-        original_message = history["messages"][0]
-        text = original_message.get("text", "")
-
-        # 2. Post into #wall-of-shame
         client.chat_postMessage(
             channel=DEST_CHANNEL,
-            text=f":rotating_light: SHAME! :rotating_light:\n{text}"
+            text=(
+                f":rotating_light: SHAME! :rotating_light:\n"
+                f"> {text}\n\n"
+                f"_Originally posted by <@{user}> in #{channel_name}_"
+            )
         )
 
-        # 3. Delete the original message
-        client.chat_delete(channel=channel, ts=ts)
 
     except SlackApiError as e:
         print(f"Error: {e.response['error']}")
