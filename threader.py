@@ -69,6 +69,12 @@ def handle_reaction_added(event, client):
 @app.command("/shameconfig")
 def handle_config(ack, respond, command):
     ack()
+    user_id = command["user_id"]
+    user_info = app.client.users_info(user=user_id)["user"]
+
+    if not (user_info.get("is_admin") or user_info.get("is_owner")):
+        return
+
     args = command["text"].split(" ", 1)
     if not args or len(args) < 2:
         respond("Usage: /shameconfig <option> <value>")
