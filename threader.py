@@ -38,7 +38,12 @@ def handle_reaction_added(event, client):
 
         channel = event["item"]["channel"]
         ts = event["item"]["ts"]
+        
+        history = client.conversations_history(channel=channel, latest=ts, inclusive=True, limit=1)
+        if not history["messages"]:
+            return
 
+        original_message = history["messages"][0]
         user = original_message.get("user")
         channel_info = client.conversations_info(channel=channel)
         channel_name = channel_info["channel"]["name"]
