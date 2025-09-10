@@ -44,6 +44,8 @@ def handle_reaction_added(event, client):
             return
 
         original_message = history["messages"][0]
+        text = original_message.get("text", "")
+        
         user = original_message.get("user")
         channel_info = client.conversations_info(channel=channel)
         channel_name = channel_info["channel"]["name"]
